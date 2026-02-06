@@ -73,6 +73,21 @@ function migrateBookData() {
         }
     });
 
+    // DOM validation - Name & Tell
+
+const nameInput = document.getElementById('borrower-name');
+const tellInput = document.getElementById('borrower-tell');
+
+// Name → numbers lama ogola
+nameInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[0-9]/g, '');
+});
+
+// Tell → xarfo lama ogola (numbers only)
+tellInput.addEventListener('input', function () {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
     // 2. FORCE NEGATIVE BALANCES: Convert any positive debt to negative
     appState.borrowers.forEach(borrower => {
         if (parseFloat(borrower.balance) > 0) {
